@@ -1,95 +1,13 @@
-:root {
-  /* Farb-Palette */
-  --color-primary: #ff6b35;
-  --color-primary-dark: #e55a2b;
-  --color-primary-light: #ff8559;
-  --color-secondary: #2c3e50;
-  --color-accent: #f39c12;
-  --color-success: #27ae60;
-  --color-warning: #f1c40f;
-  --color-error: #e74c3c;
-
-  /* Neutrale Farben */
-  --color-white: #ffffff;
-  --color-gray-100: #f8f9fa;
-  --color-gray-200: #e9ecef;
-  --color-gray-300: #dee2e6;
-  --color-gray-400: #ced4da;
-  --color-gray-500: #6c757d;
-  --color-gray-600: #495057;
-  --color-gray-700: #343a40;
-  --color-gray-800: #212529;
-  --color-black: #000000;
-
-  /* Typografie */
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-
-  /* Abstände */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-
-  /* Breakpoints */
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1024px;
-  --breakpoint-large: 1200px;
-
-  /* Schatten */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-}
-
 /* Reset */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-* {
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-  line-height: 1.5;
-  color: var(--color-gray-800);
-  background-color: var(--color-white);
-  overflow-x: hidden;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
+  background-color: #7e3838;
+  scroll-behavior: smooth;
 }

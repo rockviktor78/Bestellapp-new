@@ -121,7 +121,7 @@
 ## Modulare CSS-Architektur
 
 - **Komponenten-basierte Styles**: Jede UI-Komponente hat eigene CSS-Datei
-- **BEM-ähnliche Namenskonvention**: `.header`, `.header__logo`, `.header__nav`
+- **BEM-ähnliche Namenskonvention**: `.header`, `.header_logo`, `.header_nav`
 - **CSS Custom Properties**: Zentrale Design-Tokens in global.css
 - **Import-Reihenfolge**: global.css → layout.css → components → pages
 - **Keine CSS-Duplikation**: Gemeinsame Styles in globalen Dateien

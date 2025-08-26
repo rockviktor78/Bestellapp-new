@@ -1,42 +1,48 @@
 <header class="header">
-  <div class="header__container">
-    <div class="header__logo">
-      <button class="header__logo-btn" id="homeBtn" aria-label="Zur Startseite">
-        <span class="header__logo-icon">🍕</span>
-        <h1 class="header__logo-text">QuickBites</h1>
+  <div class="header_container">
+    <div class="header_logo">
+      <button class="header_logo-btn" id="homeBtn" aria-label="Zur Startseite">
+        <span class="header_logo-icon">🍕</span>
+        <h1 class="header_logo-text">Mampfen-rando</h1>
       </button>
     </div>
 
-    <nav class="header__nav">
-      <button class="header__nav-btn" id="menuBtn">Speisekarte</button>
-      <button class="header__nav-btn header__nav-btn--basket" id="basketBtn">
-        <span class="header__basket-icon">🛒</span>
+    <nav class="header_nav">
+      <button class="header_nav-btn" id="homeBtn">Home</button>
+      <button class="header_nav-btn" id="menuBtn">Speisekarte</button>
+      <button class="header_nav-btn" id="aboutBtn">Über uns</button>
+      <button class="header_nav-btn" id="contactBtn">Kontakt</button>
+      <button class="header_nav-btn header_nav-btn--basket" id="basketBtn">
+        <span class="header_basket-icon">🛒</span>
         Warenkorb (<span id="basketCount">0</span>)
       </button>
     </nav>
 
     <button
-      class="header__mobile-toggle"
+      class="header_mobile-toggle"
       id="mobileMenuToggle"
       aria-label="Menü öffnen"
     >
-      <span class="header__hamburger"></span>
-      <span class="header__hamburger"></span>
-      <span class="header__hamburger"></span>
+      <span class="header_hamburger"></span>
+      <span class="header_hamburger"></span>
+      <span class="header_hamburger"></span>
     </button>
   </div>
 
-  <div class="header__mobile-menu" id="mobileMenu">
+  <div class="header_mobile-menu" id="mobileMenu">
     <button
-      class="header__mobile-close"
+      class="header_mobile-close"
       id="mobileMenuClose"
       aria-label="Menü schließen"
     >
       ×
     </button>
-    <nav class="header__mobile-nav">
-      <button class="header__mobile-btn" id="mobileMenuBtn">Speisekarte</button>
-      <button class="header__mobile-btn" id="mobileBasketBtn">
+    <nav class="header_mobile-nav">
+      <button class="header_mobile-btn" id="mobileHomeBtn">Home</button>
+      <button class="header_mobile-btn" id="mobileMenuBtn">Speisekarte</button>
+      <button class="header_mobile-btn" id="mobileAboutBtn">Über uns</button>
+      <button class="header_mobile-btn" id="mobileContactBtn">Kontakt</button>
+      <button class="header_mobile-btn" id="mobileBasketBtn">
         Warenkorb (<span id="mobileBasketCount">0</span>)
       </button>
     </nav>
