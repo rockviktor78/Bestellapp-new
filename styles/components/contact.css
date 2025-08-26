@@ -1,0 +1,162 @@
+.contact {
+  padding: 4rem 1rem;
+  background-color: #ffffff;
+  min-height: 70vh;
+}
+
+.contact_container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact_title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ab4c2f;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact_content {
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: 1fr;
+}
+
+.contact_info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact_item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 2px solid #b7807c;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contact_item:hover {
+  border-color: #ab4c2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact_icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.contact_item h4 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: #ab4c2f;
+  margin-bottom: 0.5rem;
+}
+
+.contact_item p {
+  font-size: 1.125rem;
+  color: #462521;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.contact_form {
+  background-color: #ffffff;
+  border: 2px solid #b7807c;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.contact_form h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ab4c2f;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form_input,
+.form_textarea {
+  padding: 1rem;
+  border: 2px solid #b7807c;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.form_input:focus,
+.form_textarea:focus {
+  outline: none;
+  border-color: #ab4c2f;
+}
+
+.form_textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form_btn {
+  padding: 1rem 2rem;
+  background-color: #ab4c2f;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.form_btn:hover {
+  background-color: #593f3a;
+  transform: translateY(-2px);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .contact {
+    padding: 6rem 2rem;
+  }
+
+  .contact_title {
+    font-size: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .contact_content {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .contact_item {
+    padding: 2rem;
+  }
+
+  .contact_form {
+    padding: 2.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .contact_item h4 {
+    font-size: 1.5rem;
+  }
+
+  .contact_item p {
+    font-size: 1.25rem;
+  }
+}

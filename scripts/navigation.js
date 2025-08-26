@@ -211,6 +211,12 @@ class NavigationHandler {
 function initNavigation() {
   new MobileNavigation();
   new NavigationHandler();
+
+  // Re-initialize mobile navigation after HTML includes
+  document.addEventListener("htmlIncluded", () => {
+    const mobileNav = new MobileNavigation();
+    const navHandler = new NavigationHandler();
+  });
 }
 
 // Event Listener für verschiedene Initialisierungsszenarien

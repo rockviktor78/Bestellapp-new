@@ -2,12 +2,12 @@
 *,
 *::before,
 *::after {
+  scroll-behavior: smooth;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
-  background-color: #7e3838;
-  scroll-behavior: smooth;
+  background-color: #7e3838;  
 }
