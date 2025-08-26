@@ -14,6 +14,7 @@
   padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  min-width: 0;
 }
 
 .header_logo-btn {
@@ -33,14 +34,17 @@
   font-size: 2rem;
   font-weight: 700;
   color: #ab4c2f;
+  white-space: nowrap;
 }
 
 .header_nav {
   display: none;
+  min-width: 0;
+  flex-shrink: 0;
 }
 
 .header_nav-btn {
-  padding: 0.1rem 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   font-weight: 500;
   background-color: transparent;
@@ -50,9 +54,17 @@
   border: 1px solid transparent;
   cursor: pointer;
   font-family: inherit;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .header_nav-btn:hover {
+  background-color: #eca660;
+  color: #462521;
+}
+
+.header_nav-btn.active {
   background-color: #eca660;
   color: #462521;
 }
@@ -64,9 +76,17 @@
   background-color: #ab4c2f;
   color: #ffffff;
   border: 1px solid #ab4c2f;
+  min-width: auto;
+  flex-shrink: 0;
 }
 
 .header_nav-btn--basket:hover {
+  background-color: #593f3a;
+  color: #ffffff;
+  border-color: #593f3a;
+}
+
+.header_nav-btn--basket.active {
   background-color: #593f3a;
   color: #ffffff;
   border-color: #593f3a;
@@ -149,6 +169,11 @@
   color: #462521;
 }
 
+.header_mobile-btn.active {
+  background-color: #eca660;
+  color: #462521;
+}
+
 /* Animation für einzelne Buttons */
 .header_mobile-menu--open .header_mobile-btn:nth-child(1) {
   transform: translateX(0);
@@ -199,6 +224,10 @@
 
   .header_nav {
     display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-shrink: 0;
   }
 
   .header_mobile-toggle {
@@ -206,7 +235,25 @@
   }
 
   .header_logo-text {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    white-space: nowrap;
+  }
+}
+
+/* Spezifischer Fix für 821px */
+@media (min-width: 768px) and (max-width: 900px) {
+  .header_nav-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+  }
+
+  .header_nav {
+    gap: 0.2rem;
+  }
+
+  .header_logo-text {
+    font-size: 2rem;
   }
 }
 
@@ -216,8 +263,47 @@
     padding: 1.5rem 2rem;
   }
 
+  .header_nav {
+    gap: 1rem;
+  }
+
   .header_nav-btn {
-    padding: 1rem 1.5rem;
-    font-size: 1.125rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    margin-left: 0.75rem;
+  }
+
+  .header_logo-text {
+    font-size: 2.5rem;
+  }
+}
+
+/* Extra kleine Screens */
+@media (max-width: 480px) {
+  .header_logo-text {
+    font-size: 1.3rem;
+  }
+
+  .header_container {
+    padding: 0.75rem;
+  }
+
+  .header_logo-icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* Sehr kleine Screens */
+@media (max-width: 360px) {
+  .header_logo-text {
+    font-size: 1.1rem;
+  }
+
+  .header_container {
+    padding: 0.5rem;
+  }
+
+  .header_logo-icon {
+    font-size: 1rem;
   }
 }

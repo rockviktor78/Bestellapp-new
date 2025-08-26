@@ -60,10 +60,17 @@ class MobileNavigation {
 // Navigation Handler für alle Buttons
 class NavigationHandler {
   constructor() {
+    this.contentContainer = document.getElementById("content");
+    this.currentPage = "home";
     this.init();
   }
 
   init() {
+    // Logo Button
+    document
+      .getElementById("logoHomeBtn")
+      ?.addEventListener("click", () => this.navigateToHome());
+
     // Mobile Navigation Buttons
     document
       .getElementById("mobileHomeBtn")
@@ -97,36 +104,98 @@ class NavigationHandler {
     document
       .getElementById("basketBtn")
       ?.addEventListener("click", () => this.navigateToBasket());
+
+    // Hero Button Event Listener hinzufügen
+    document.addEventListener("pageLoaded", () => {
+      const heroBtn = document.getElementById("heroOrderBtn");
+      if (heroBtn) {
+        heroBtn.addEventListener("click", () => this.navigateToMenu());
+      }
+
+      // Re-initialize logo button after page load
+      const logoBtn = document.getElementById("logoHomeBtn");
+      if (logoBtn) {
+        logoBtn.addEventListener("click", () => this.navigateToHome());
+      }
+    });
+  }
+
+  async loadContent(templatePath, pageName) {
+    if (!this.contentContainer) return;
+
+    try {
+      const response = await fetch(templatePath);
+      if (response.ok) {
+        const html = await response.text();
+        this.contentContainer.innerHTML = html;
+        this.currentPage = pageName;
+
+        // Update active navigation states
+        this.updateActiveStates();
+
+        // Trigger custom event für page-spezifische Initialisierung
+        const event = new CustomEvent("pageLoaded", {
+          detail: { page: pageName, container: this.contentContainer },
+        });
+        document.dispatchEvent(event);
+
+        console.log(`Navigiert zu ${pageName}`);
+      } else {
+        console.error(`Fehler beim Laden von ${templatePath}`);
+      }
+    } catch (error) {
+      console.error(`Fehler beim Laden von ${templatePath}:`, error);
+    }
+
+    this.closeMenuIfOpen();
+  }
+
+  updateActiveStates() {
+    // Entferne alle aktiven Zustände
+    document
+      .querySelectorAll(".header_nav-btn, .header_mobile-btn")
+      .forEach((btn) => {
+        btn.classList.remove("active");
+      });
+
+    // Setze aktiven Zustand basierend auf aktueller Seite
+    const activeButtons = {
+      home: ["homeBtn", "mobileHomeBtn"],
+      menu: ["menuBtn", "mobileMenuBtn"],
+      about: ["aboutBtn", "mobileAboutBtn"],
+      contact: ["contactBtn", "mobileContactBtn"],
+    };
+
+    if (activeButtons[this.currentPage]) {
+      activeButtons[this.currentPage].forEach((btnId) => {
+        const btn = document.getElementById(btnId);
+        if (btn && !btn.classList.contains("header_nav-btn--basket")) {
+          btn.classList.add("active");
+        }
+      });
+    }
   }
 
   navigateToHome() {
-    console.log("Navigiere zu Home");
-    this.closeMenuIfOpen();
-    // Hier würde die Navigation implementiert werden
+    this.loadContent("templates/home-content.html", "home");
   }
 
   navigateToMenu() {
-    console.log("Navigiere zu Speisekarte");
-    this.closeMenuIfOpen();
-    // Hier würde die Navigation implementiert werden
+    this.loadContent("templates/menu-content.html", "menu");
   }
 
   navigateToAbout() {
-    console.log("Navigiere zu Über uns");
-    this.closeMenuIfOpen();
-    // Hier würde die Navigation implementiert werden
+    this.loadContent("templates/about-content.html", "about");
   }
 
   navigateToContact() {
-    console.log("Navigiere zu Kontakt");
-    this.closeMenuIfOpen();
-    // Hier würde die Navigation implementiert werden
+    this.loadContent("templates/contact-content.html", "contact");
   }
 
   navigateToBasket() {
     console.log("Navigiere zu Warenkorb");
     this.closeMenuIfOpen();
-    // Hier würde die Navigation implementiert werden
+    // Hier würde die Warenkorb-Logik implementiert werden
   }
 
   closeMenuIfOpen() {
