@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="header__container">
+    <div class="header__logo">
+      <button class="header__logo-btn" id="homeBtn" aria-label="Zur Startseite">
+        <span class="header__logo-icon">🍕</span>
+        <h1 class="header__logo-text">QuickBites</h1>
+      </button>
+    </div>
+
+    <nav class="header__nav">
+      <button class="header__nav-btn" id="menuBtn">Speisekarte</button>
+      <button class="header__nav-btn header__nav-btn--basket" id="basketBtn">
+        <span class="header__basket-icon">🛒</span>
+        Warenkorb (<span id="basketCount">0</span>)
+      </button>
+    </nav>
+
+    <button
+      class="header__mobile-toggle"
+      id="mobileMenuToggle"
+      aria-label="Menü öffnen"
+    >
+      <span class="header__hamburger"></span>
+      <span class="header__hamburger"></span>
+      <span class="header__hamburger"></span>
+    </button>
+  </div>
+
+  <div class="header__mobile-menu" id="mobileMenu">
+    <button
+      class="header__mobile-close"
+      id="mobileMenuClose"
+      aria-label="Menü schließen"
+    >
+      ×
+    </button>
+    <nav class="header__mobile-nav">
+      <button class="header__mobile-btn" id="mobileMenuBtn">Speisekarte</button>
+      <button class="header__mobile-btn" id="mobileBasketBtn">
+        Warenkorb (<span id="mobileBasketCount">0</span>)
+      </button>
+    </nav>
+  </div>
+</header>
