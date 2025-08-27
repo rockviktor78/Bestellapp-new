@@ -9,5 +9,12 @@
 }
 
 body {
-  background-color: #7e3838;  
+  background-color: #7e3838;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
 }
