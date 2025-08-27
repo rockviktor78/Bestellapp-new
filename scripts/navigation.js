@@ -105,19 +105,67 @@ class NavigationHandler {
       .getElementById("basketBtn")
       ?.addEventListener("click", () => this.navigateToBasket());
 
-    // Hero Button Event Listener hinzufügen
-    document.addEventListener("pageLoaded", () => {
-      const heroBtn = document.getElementById("heroOrderBtn");
-      if (heroBtn) {
-        heroBtn.addEventListener("click", () => this.navigateToMenu());
+    // Event Listener für dynamisch geladene Inhalte
+    this.initDynamicEventListeners();
+  }
+
+  initDynamicEventListeners() {
+    // Hero Button Event Listener
+    document.addEventListener("pageLoaded", (event) => {
+      if (event.detail.page === "home") {
+        const heroBtn = document.getElementById("heroOrderBtn");
+        if (heroBtn) {
+          heroBtn.addEventListener("click", () => {
+            this.navigateToMenu();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+        }
+
+        // Feature Cards Event Listeners
+        this.initFeatureCards();
       }
 
-      // Re-initialize logo button after page load
-      const logoBtn = document.getElementById("logoHomeBtn");
-      if (logoBtn) {
-        logoBtn.addEventListener("click", () => this.navigateToHome());
-      }
+      // Re-initialize other dynamic buttons if needed
+      this.reinitializeButtons();
     });
+  }
+
+  initFeatureCards() {
+    // Pizza Feature Card
+    const pizzaCard = document.getElementById("pizzaFeatureCard");
+    if (pizzaCard) {
+      pizzaCard.addEventListener("click", () => {
+        this.navigateToMenuCategory("pizza");
+      });
+    }
+
+    // Pasta Feature Card
+    const pastaCard = document.getElementById("pastaFeatureCard");
+    if (pastaCard) {
+      pastaCard.addEventListener("click", () => {
+        this.navigateToMenuCategory("pasta");
+      });
+    }
+
+    // Delivery Feature Card (führt zur allgemeinen Speisekarte)
+    const deliveryCard = document.getElementById("deliveryFeatureCard");
+    if (deliveryCard) {
+      deliveryCard.addEventListener("click", () => {
+        this.navigateToMenu();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+  }
+
+  reinitializeButtons() {
+    // Re-initialize logo button after page load
+    const logoBtn = document.getElementById("logoHomeBtn");
+    if (logoBtn) {
+      // Remove existing listeners to avoid duplicates
+      logoBtn.replaceWith(logoBtn.cloneNode(true));
+      const newLogoBtn = document.getElementById("logoHomeBtn");
+      newLogoBtn?.addEventListener("click", () => this.navigateToHome());
+    }
   }
 
   async loadContent(templatePath, pageName) {
@@ -198,6 +246,21 @@ class NavigationHandler {
     // Hier würde die Warenkorb-Logik implementiert werden
   }
 
+  navigateToMenuCategory(category) {
+    // Navigiere zur Speisekarte
+    this.navigateToMenu();
+
+    // Scroll zur entsprechenden Kategorie nach dem Laden
+    setTimeout(() => {
+      const categoryElement =
+        document.querySelector(`[data-category="${category}"]`) ||
+        document.querySelector(`.category_title:contains("${category}")`);
+      if (categoryElement) {
+        categoryElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 300);
+  }
+
   closeMenuIfOpen() {
     const mobileMenu = document.getElementById("mobileMenu");
     if (mobileMenu?.classList.contains("header_mobile-menu--open")) {
@@ -211,16 +274,16 @@ class NavigationHandler {
 function initNavigation() {
   new MobileNavigation();
   new NavigationHandler();
-
-  // Re-initialize mobile navigation after HTML includes
-  document.addEventListener("htmlIncluded", () => {
-    const mobileNav = new MobileNavigation();
-    const navHandler = new NavigationHandler();
-  });
 }
 
 // Event Listener für verschiedene Initialisierungsszenarien
 document.addEventListener("DOMContentLoaded", initNavigation);
+document.addEventListener("htmlIncluded", initNavigation);
+
+// Export für Module
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { MobileNavigation, NavigationHandler, initNavigation };
+}
 document.addEventListener("htmlIncluded", initNavigation);
 
 // Export für Module

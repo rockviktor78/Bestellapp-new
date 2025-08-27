@@ -2,7 +2,6 @@
   background-color: #462521;
   color: #ffffff;
   padding: 3rem 1rem 1rem;
-  margin-top: auto;
 }
 
 .footer_container {
@@ -25,15 +24,14 @@
 
 .footer_title {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #eca660;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .footer_text {
-  line-height: 1.6;
   color: #b7807c;
-  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .footer_contact {
@@ -77,22 +75,34 @@
 }
 
 .social_link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: #593f3a;
-  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
   text-decoration: none;
   border-radius: 50%;
-  font-size: 1.2rem;
+  background-color: rgba(236, 166, 96, 0.2);
   transition: all 0.3s ease;
 }
 
 .social_link:hover {
-  background-color: #ab4c2f;
-  transform: translateY(-2px);
+  background-color: #eca660;
+  transform: scale(1.1);
+}
+
+/* Falls SVG Icons verwendet werden */
+.social_link img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.social_link:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 .footer_bottom {

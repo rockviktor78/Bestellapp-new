@@ -32,12 +32,23 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero_btn:hover {
   background-color: #b7807c;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.hero_btn:active {
+  transform: translateY(0);
+}
+
+.hero_btn:focus {
+  outline: 2px solid #ab4c2f;
+  outline-offset: 2px;
 }
 
 .features {
@@ -60,12 +71,17 @@
   background-color: #ffffff;
   border: 1px solid #b7807c;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .feature_card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   border-color: #ab4c2f;
+}
+
+.feature_card:active {
+  transform: translateY(-2px);
 }
 
 .feature_icon {
