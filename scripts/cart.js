@@ -5,12 +5,15 @@ class CartHandler {
   constructor() {
     this.cart = [];
     this.cartCount = 0;
+    this.cartModal = null;
     this.init();
   }
 
-  init() {
+  async init() {
+    await this.loadCartModal();
     this.updateCartDisplay();
     this.initAddButtons();
+    this.initCartModal();
 
     // Event Listener für dynamisch geladene Inhalte
     document.addEventListener("pageLoaded", (event) => {
@@ -18,6 +21,123 @@ class CartHandler {
         this.initAddButtons();
       }
     });
+  }
+
+  async loadCartModal() {
+    try {
+      const response = await fetch("templates/cart-modal.html");
+      if (response.ok) {
+        const html = await response.text();
+        document.body.insertAdjacentHTML("beforeend", html);
+        this.cartModal = document.getElementById("cartModal");
+      }
+    } catch (error) {
+      console.error("Fehler beim Laden des Warenkorb-Modals:", error);
+    }
+  }
+
+  initCartModal() {
+    // Cart Modal Event Listeners
+    document
+      .getElementById("basketBtn")
+      ?.addEventListener("click", () => this.openCartModal());
+    document
+      .getElementById("mobileBasketBtn")
+      ?.addEventListener("click", () => this.openCartModal());
+    document
+      .getElementById("cartModalClose")
+      ?.addEventListener("click", () => this.closeCartModal());
+    document
+      .getElementById("cartModalOverlay")
+      ?.addEventListener("click", () => this.closeCartModal());
+    document
+      .getElementById("cartEmptyMenuBtn")
+      ?.addEventListener("click", () => {
+        this.closeCartModal();
+        // Navigation zur Speisekarte
+        window.dispatchEvent(new CustomEvent("navigateToMenu"));
+      });
+  }
+
+  openCartModal() {
+    if (this.cartModal) {
+      this.cartModal.classList.add("cart-modal--open");
+      document.body.style.overflow = "hidden";
+      this.renderCartItems();
+    }
+  }
+
+  closeCartModal() {
+    if (this.cartModal) {
+      this.cartModal.classList.remove("cart-modal--open");
+      document.body.style.overflow = "";
+    }
+  }
+
+  renderCartItems() {
+    const cartEmpty = document.getElementById("cartEmpty");
+    const cartItems = document.getElementById("cartItems");
+    const cartFooter = document.getElementById("cartModalFooter");
+
+    if (this.cart.length === 0) {
+      cartEmpty.style.display = "block";
+      cartItems.innerHTML = "";
+      cartFooter.style.display = "none";
+    } else {
+      cartEmpty.style.display = "none";
+      cartFooter.style.display = "block";
+
+      cartItems.innerHTML = this.cart
+        .map(
+          (item) => `
+        <div class="cart-item">
+          <div class="cart-item_info">
+            <div class="cart-item_name">${item.name}</div>
+            <div class="cart-item_price">${(item.price * item.quantity).toFixed(
+              2
+            )} €</div>
+          </div>
+          <div class="cart-item_controls">
+            <button class="cart-item_btn" onclick="window.cartHandler.decreaseQuantity('${
+              item.name
+            }')">−</button>
+            <span class="cart-item_quantity">${item.quantity}</span>
+            <button class="cart-item_btn" onclick="window.cartHandler.increaseQuantity('${
+              item.name
+            }')">+</button>
+          </div>
+        </div>
+      `
+        )
+        .join("");
+
+      document.getElementById(
+        "cartTotalAmount"
+      ).textContent = `${this.getCartTotal().toFixed(2)} €`;
+    }
+  }
+
+  increaseQuantity(name) {
+    const item = this.cart.find((item) => item.name === name);
+    if (item) {
+      item.quantity += 1;
+      this.cartCount += 1;
+      this.updateCartDisplay();
+      this.renderCartItems();
+    }
+  }
+
+  decreaseQuantity(name) {
+    const item = this.cart.find((item) => item.name === name);
+    if (item && item.quantity > 1) {
+      item.quantity -= 1;
+      this.cartCount -= 1;
+    } else if (item) {
+      this.cart = this.cart.filter((cartItem) => cartItem.name !== name);
+      this.cartCount -= 1;
+    }
+    this.updateCartDisplay();
+    this.renderCartItems();
   }
 
   initAddButtons() {
