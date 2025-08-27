@@ -37,33 +37,37 @@ class CartHandler {
   }
 
   initCartModal() {
-    // Cart Modal Event Listeners
-    document
-      .getElementById("basketBtn")
-      ?.addEventListener("click", () => this.openCartModal());
-    document
-      .getElementById("mobileBasketBtn")
-      ?.addEventListener("click", () => this.openCartModal());
-    document
-      .getElementById("cartModalClose")
-      ?.addEventListener("click", () => this.closeCartModal());
-    document
-      .getElementById("cartModalOverlay")
-      ?.addEventListener("click", () => this.closeCartModal());
-    document
-      .getElementById("cartEmptyMenuBtn")
-      ?.addEventListener("click", () => {
+    console.log("Initializing cart modal...");
+    document.addEventListener("click", (e) => {
+      console.log("Click detected:", e.target.id);
+      if (e.target.id === "basketBtn" || e.target.id === "mobileBasketBtn") {
+        console.log("Cart button clicked!");
+        e.preventDefault();
+        e.stopPropagation();
+        this.openCartModal();
+      } else if (
+        e.target.id === "cartModalClose" ||
+        e.target.id === "cartModalOverlay"
+      ) {
         this.closeCartModal();
-        // Navigation zur Speisekarte
-        window.dispatchEvent(new CustomEvent("navigateToMenu"));
-      });
+      } else if (e.target.id === "cartEmptyMenuBtn") {
+        this.closeCartModal();
+        if (window.navigationHandler) {
+          window.navigationHandler.navigateToMenu();
+        }
+      }
+    });
   }
 
   openCartModal() {
+    console.log("Opening cart modal...", this.cartModal);
     if (this.cartModal) {
       this.cartModal.classList.add("cart-modal--open");
       document.body.style.overflow = "hidden";
       this.renderCartItems();
+      console.log("Cart modal should be open now");
+    } else {
+      console.error("Cart modal not found!");
     }
   }
 
@@ -132,12 +136,14 @@ class CartHandler {
     if (item && item.quantity > 1) {
       item.quantity -= 1;
       this.cartCount -= 1;
+      this.updateCartDisplay();
+      this.renderCartItems();
     } else if (item) {
       this.cart = this.cart.filter((cartItem) => cartItem.name !== name);
       this.cartCount -= 1;
+      this.updateCartDisplay();
+      this.renderCartItems();
     }
-    this.updateCartDisplay();
-    this.renderCartItems();
   }
 
   initAddButtons() {
