@@ -81,6 +81,9 @@ function initFooterLegalLinks() {
       } else if (linkText === "Impressum") {
         console.log("Loading Impressum content");
         loadContentIntoMain("templates/impressum-content.html");
+      } else if (linkText === "AGB") {
+        console.log("Loading AGB content");
+        loadContentIntoMain("templates/agb-content.html");
       }
     }
   });
