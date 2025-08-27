@@ -27,6 +27,10 @@
   margin-bottom: 1.5rem;
   border-bottom: 2px solid #eca660;
   padding-bottom: 0.5rem;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .menu_items {
@@ -37,7 +41,7 @@
 .menu_item {
   display: flex;
   gap: 1rem;
-  padding: 1.5rem;
+  padding: 0.5rem;
   background-color: #faf8f5;
   border: 1px solid #b7807c;
   border-radius: 0.75rem;
@@ -162,5 +166,79 @@
   .item_image {
     width: 120px;
     height: 120px;
+  }
+}
+
+/* Mobile Warenkorb Button */
+.mobile-cart-fab {
+  width: 50px;
+  height: 50px;
+  background-color: #ab4c2f;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  position: relative;
+  top: -2px;
+}
+
+/* Zeige FAB nur bei der ersten Kategorie (Pizza) auf mobilen Geräten */
+.menu_category:first-child .category_title::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.menu_category:first-child {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .menu_category:first-child .category_title .mobile-cart-fab {
+    display: flex;
+  }
+}
+
+/* Verstecke mobile FAB auf größeren Bildschirmen */
+@media (min-width: 768px) {
+  .mobile-cart-fab {
+    display: none !important;
+  }
+}
+}
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.menu_category:first-child {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .menu_category:first-child .mobile-cart-fab {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+/* Verstecke mobile FAB auf größeren Bildschirmen */
+@media (min-width: 768px) {
+  .mobile-cart-fab {
+    display: none !important;
   }
 }

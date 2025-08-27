@@ -318,6 +318,13 @@ class NavigationHandler {
         });
         document.dispatchEvent(event);
 
+        // Force FAB update after content load
+        if (pageName === "menu" && window.cartHandler) {
+          setTimeout(() => {
+            window.cartHandler.showMobileCartFAB();
+          }, 100);
+        }
+
         console.log(`Navigiert zu ${pageName}`);
       } else {
         console.error(`Fehler beim Laden von ${templatePath}`);
