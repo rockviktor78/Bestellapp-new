@@ -411,7 +411,7 @@ class NavigationHandler {
 // Initialisierung nach DOM Load oder HTML Include
 function initNavigation() {
   new MobileNavigation();
-  new NavigationHandler();
+  window.navigationHandler = new NavigationHandler(); // Global verfügbar machen
 }
 
 // Event Listener für verschiedene Initialisierungsszenarien

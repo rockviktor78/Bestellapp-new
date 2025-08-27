@@ -15,6 +15,7 @@ class CartHandler {
     this.updateCartDisplay();
     this.initAddButtons();
     this.initCartModal();
+    this.initEmptyCartButton(); // Neue Methode hinzufügen
 
     // Event Listener für dynamisch geladene Inhalte
     document.addEventListener("pageLoaded", (event) => {
@@ -25,6 +26,35 @@ class CartHandler {
         this.hideMobileCartFAB();
       }
     });
+  }
+
+  initEmptyCartButton() {
+    // Warte bis Modal geladen ist
+    const checkModal = setInterval(() => {
+      const emptyCartBtn = document.getElementById("cartEmptyMenuBtn");
+      if (emptyCartBtn) {
+        clearInterval(checkModal);
+        console.log("Empty cart button found, adding event listener");
+
+        emptyCartBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log("Empty cart button clicked - navigating to menu");
+
+          this.closeCartModal();
+
+          // Navigation zur Speisekarte
+          if (window.navigationHandler) {
+            window.navigationHandler.navigateToMenu();
+          } else {
+            console.error("NavigationHandler not found");
+          }
+        });
+      }
+    }, 100);
+
+    // Stoppe Check nach 5 Sekunden
+    setTimeout(() => clearInterval(checkModal), 5000);
   }
 
   async loadCartModal() {
@@ -80,12 +110,90 @@ class CartHandler {
       ) {
         this.closeCartModal();
       } else if (e.target.id === "cartEmptyMenuBtn") {
+        console.log("Empty cart menu button clicked!");
         this.closeCartModal();
         if (window.navigationHandler) {
           window.navigationHandler.navigateToMenu();
         }
+      } else if (e.target.id === "cartCheckoutBtn") {
+        this.processCheckout();
       }
     });
+  }
+
+  processCheckout() {
+    if (this.cart.length === 0) return;
+
+    const checkoutBtn = document.getElementById("cartCheckoutBtn");
+    if (checkoutBtn) {
+      // Button deaktivieren während Checkout
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = "Wird bearbeitet...";
+
+      // Erste Popup: Bestellung wurde aufgegeben
+      this.showCheckoutPopup("Bestellung wurde aufgegeben!", "success");
+
+      // Nach 2 Sekunden: Danke-Nachricht
+      setTimeout(() => {
+        this.showCheckoutPopup("Danke für deine Bestellung!", "success");
+
+        // Nach weiteren 2 Sekunden: Warenkorb leeren und Modal schließen
+        setTimeout(() => {
+          this.clearCart();
+          this.closeCartModal();
+          checkoutBtn.disabled = false;
+          checkoutBtn.textContent = "Zur Kasse";
+        }, 2000);
+      }, 2000);
+    }
+  }
+
+  showCheckoutPopup(message, type = "success") {
+    // Erstelle Popup-Element
+    const popup = document.createElement("div");
+    popup.className = "checkout-popup";
+    popup.innerHTML = `
+      <div class="checkout-popup_content checkout-popup_content--${type}">
+        <span class="checkout-popup_icon">${
+          type === "success" ? "✅" : "❌"
+        }</span>
+        <p class="checkout-popup_text">${message}</p>
+      </div>
+    `;
+
+    // Positioniere Popup in der Mitte des Bildschirms
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.zIndex = "10001";
+    popup.style.opacity = "0";
+    popup.style.transition = "opacity 0.3s ease";
+
+    document.body.appendChild(popup);
+
+    // Zeige Popup
+    setTimeout(() => {
+      popup.style.opacity = "1";
+    }, 10);
+
+    // Verstecke Popup nach 1.5 Sekunden
+    setTimeout(() => {
+      popup.style.opacity = "0";
+      setTimeout(() => {
+        if (document.body.contains(popup)) {
+          document.body.removeChild(popup);
+        }
+      }, 300);
+    }, 1500);
+  }
+
+  clearCart() {
+    this.cart = [];
+    this.cartCount = 0;
+    this.updateCartDisplay();
+    this.renderCartItems();
+    console.log("Warenkorb geleert");
   }
 
   openCartModal() {
@@ -256,6 +364,10 @@ class CartHandler {
 // Global verfügbar machen
 window.cartHandler = new CartHandler();
 
+// Export für Module
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { CartHandler };
+}
 // Export für Module
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { CartHandler };
