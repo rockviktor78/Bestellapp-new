@@ -32,6 +32,52 @@ function includeHTML() {
   });
 }
 
+// Funktion zum Laden von Content in den content-Container
+async function loadContentIntoMain(templatePath) {
+  const contentContainer = document.getElementById("content");
+  if (!contentContainer) {
+    console.error("Content container not found");
+    return;
+  }
+
+  try {
+    const response = await fetch(templatePath);
+    if (response.ok) {
+      const html = await response.text();
+      contentContainer.innerHTML = html;
+
+      // Trigger custom event
+      const event = new CustomEvent("contentLoaded", {
+        detail: { template: templatePath },
+      });
+      document.dispatchEvent(event);
+
+      console.log("Content loaded:", templatePath);
+    } else {
+      console.error(`Fehler beim Laden von ${templatePath}`);
+      contentContainer.innerHTML = "<p>Fehler beim Laden des Inhalts.</p>";
+    }
+  } catch (error) {
+    console.error(`Fehler beim Laden von ${templatePath}:`, error);
+    contentContainer.innerHTML = "<p>Fehler beim Laden des Inhalts.</p>";
+  }
+}
+
+// Event Listener für Footer Links
+document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("legal_link")) {
+      e.preventDefault();
+      const linkText = e.target.textContent.trim();
+
+      if (linkText === "Datenschutz") {
+        console.log("Loading Datenschutz content");
+        loadContentIntoMain("templates/datenschutz-content.html");
+      }
+    }
+  });
+});
+
 // Automatisch ausführen wenn DOM geladen ist
 document.addEventListener("DOMContentLoaded", includeHTML);
 
