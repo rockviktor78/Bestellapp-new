@@ -32,7 +32,10 @@ function includeHTML() {
   });
 }
 
-// Funktion zum Laden von Content in den content-Container
+/**
+ * Lädt Content in den Haupt-Content-Container
+ * @param {string} templatePath - Der Pfad zum Template
+ */
 async function loadContentIntoMain(templatePath) {
   const contentContainer = document.getElementById("content");
   if (!contentContainer) {
@@ -63,8 +66,10 @@ async function loadContentIntoMain(templatePath) {
   }
 }
 
-// Event Listener für Footer Links
-document.addEventListener("DOMContentLoaded", () => {
+/**
+ * Initialisiert Event Listener für Footer Legal Links
+ */
+function initFooterLegalLinks() {
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("legal_link")) {
       e.preventDefault();
@@ -73,9 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
       if (linkText === "Datenschutz") {
         console.log("Loading Datenschutz content");
         loadContentIntoMain("templates/datenschutz-content.html");
+      } else if (linkText === "Impressum") {
+        console.log("Loading Impressum content");
+        loadContentIntoMain("templates/impressum-content.html");
       }
     }
   });
+}
+
+// Event Listener für Footer Links
+document.addEventListener("DOMContentLoaded", () => {
+  initFooterLegalLinks();
 });
 
 // Automatisch ausführen wenn DOM geladen ist

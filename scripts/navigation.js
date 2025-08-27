@@ -1,7 +1,10 @@
 /**
- * Mobile Navigation Handler
+ * Mobile Navigation Handler - Verwaltet das mobile Menü
  */
 class MobileNavigation {
+  /**
+   * Konstruktor für Mobile Navigation
+   */
   constructor() {
     this.mobileMenuToggle = document.getElementById("mobileMenuToggle");
     this.mobileMenu = document.getElementById("mobileMenu");
@@ -10,6 +13,9 @@ class MobileNavigation {
     this.init();
   }
 
+  /**
+   * Initialisiert die mobile Navigation Event Listener
+   */
   init() {
     if (this.mobileMenuToggle && this.mobileMenu && this.mobileMenuClose) {
       this.mobileMenuToggle.addEventListener("click", () => this.toggleMenu());
@@ -20,6 +26,9 @@ class MobileNavigation {
     }
   }
 
+  /**
+   * Öffnet oder schließt das mobile Menü
+   */
   toggleMenu() {
     const isOpen = this.mobileMenu.classList.contains(
       "header_mobile-menu--open"
@@ -32,18 +41,28 @@ class MobileNavigation {
     }
   }
 
+  /**
+   * Öffnet das mobile Menü
+   */
   openMenu() {
     this.mobileMenu.classList.add("header_mobile-menu--open");
     this.mobileMenuToggle.setAttribute("aria-label", "Menü schließen");
     document.body.style.overflow = "hidden"; // Verhindert scrollen
   }
 
+  /**
+   * Schließt das mobile Menü
+   */
   closeMenu() {
     this.mobileMenu.classList.remove("header_mobile-menu--open");
     this.mobileMenuToggle.setAttribute("aria-label", "Menü öffnen");
     document.body.style.overflow = ""; // Erlaubt wieder scrollen
   }
 
+  /**
+   * Behandelt Klicks außerhalb des mobilen Menüs
+   * @param {Event} event - Das Click-Event
+   */
   handleOutsideClick(event) {
     const isMenuOpen = this.mobileMenu.classList.contains(
       "header_mobile-menu--open"
@@ -57,14 +76,22 @@ class MobileNavigation {
   }
 }
 
-// Navigation Handler für alle Buttons
+/**
+ * Navigation Handler für alle Buttons - Verwaltet die Seitennavigation
+ */
 class NavigationHandler {
+  /**
+   * Konstruktor für Navigation Handler
+   */
   constructor() {
     this.contentContainer = document.getElementById("content");
     this.currentPage = "home";
     this.init();
   }
 
+  /**
+   * Initialisiert alle Navigation Event Listener
+   */
   init() {
     // Logo Button
     document
@@ -109,6 +136,9 @@ class NavigationHandler {
     this.initDynamicEventListeners();
   }
 
+  /**
+   * Initialisiert Event Listener für dynamisch geladene Inhalte
+   */
   initDynamicEventListeners() {
     // Hero Button Event Listener
     document.addEventListener("pageLoaded", (event) => {
@@ -132,6 +162,9 @@ class NavigationHandler {
     });
   }
 
+  /**
+   * Initialisiert das Kontaktformular mit Validierung
+   */
   initContactForm() {
     const contactForm = document.querySelector(".form");
     const formBtn = document.querySelector(".form_btn");
@@ -188,6 +221,9 @@ class NavigationHandler {
     }
   }
 
+  /**
+   * Zeigt ein Erfolgs-Popup an
+   */
   showSuccessPopup() {
     const popup = document.createElement("div");
     popup.className = "success-popup";
@@ -200,6 +236,10 @@ class NavigationHandler {
     this.showPopup(popup);
   }
 
+  /**
+   * Zeigt ein Fehler-Popup an
+   * @param {string} message - Die Fehlermeldung
+   */
   showErrorPopup(message) {
     const popup = document.createElement("div");
     popup.className = "success-popup";
@@ -212,6 +252,10 @@ class NavigationHandler {
     this.showPopup(popup);
   }
 
+  /**
+   * Zeigt ein Popup an der korrekten Position
+   * @param {HTMLElement} popup - Das Popup-Element
+   */
   showPopup(popup) {
     // Finde den Form-Button als Referenzpunkt
     const formBtn = document.querySelector(".form_btn");
@@ -245,6 +289,9 @@ class NavigationHandler {
     }, 3000);
   }
 
+  /**
+   * Initialisiert Event Listener für Feature Cards
+   */
   initFeatureCards() {
     // Pizza Feature Card
     const pizzaCard = document.getElementById("pizzaFeatureCard");
@@ -288,17 +335,11 @@ class NavigationHandler {
     }
   }
 
-  reinitializeButtons() {
-    // Re-initialize logo button after page load
-    const logoBtn = document.getElementById("logoHomeBtn");
-    if (logoBtn) {
-      // Remove existing listeners to avoid duplicates
-      logoBtn.replaceWith(logoBtn.cloneNode(true));
-      const newLogoBtn = document.getElementById("logoHomeBtn");
-      newLogoBtn?.addEventListener("click", () => this.navigateToHome());
-    }
-  }
-
+  /**
+   * Lädt Content von einem Template-Pfad
+   * @param {string} templatePath - Pfad zum Template
+   * @param {string} pageName - Name der Seite
+   */
   async loadContent(templatePath, pageName) {
     if (!this.contentContainer) return;
 
@@ -336,6 +377,9 @@ class NavigationHandler {
     this.closeMenuIfOpen();
   }
 
+  /**
+   * Aktualisiert die aktiven Zustände der Navigation Buttons
+   */
   updateActiveStates() {
     // Entferne alle aktiven Zustände
     document
@@ -362,28 +406,54 @@ class NavigationHandler {
     }
   }
 
+  /**
+   * Navigiert zur Home-Seite
+   */
   navigateToHome() {
     this.loadContent("templates/home-content.html", "home");
   }
 
+  /**
+   * Navigiert zur Speisekarte
+   */
   navigateToMenu() {
     this.loadContent("templates/menu-content.html", "menu");
   }
 
+  /**
+   * Navigiert zur Über-uns-Seite
+   */
   navigateToAbout() {
     this.loadContent("templates/about-content.html", "about");
   }
 
+  /**
+   * Navigiert zur Kontakt-Seite
+   */
   navigateToContact() {
     this.loadContent("templates/contact-content.html", "contact");
   }
 
+  /**
+   * Navigiert zur Datenschutz-Seite
+   */
+  navigateToPrivacy() {
+    this.loadContent("templates/privacy-content.html", "privacy");
+  }
+
+  /**
+   * Navigiert zum Warenkorb
+   */
   navigateToBasket() {
     console.log("Navigiere zu Warenkorb");
     this.closeMenuIfOpen();
     // Hier würde die Warenkorb-Logik implementiert werden
   }
 
+  /**
+   * Navigiert zu einer bestimmten Menü-Kategorie
+   * @param {string} category - Die Kategorie (pizza, pasta, etc.)
+   */
   navigateToMenuCategory(category) {
     // Navigiere zur Speisekarte
     this.navigateToMenu();
@@ -399,6 +469,9 @@ class NavigationHandler {
     }, 300);
   }
 
+  /**
+   * Schließt das mobile Menü falls es geöffnet ist
+   */
   closeMenuIfOpen() {
     const mobileMenu = document.getElementById("mobileMenu");
     if (mobileMenu?.classList.contains("header_mobile-menu--open")) {
@@ -408,7 +481,9 @@ class NavigationHandler {
   }
 }
 
-// Initialisierung nach DOM Load oder HTML Include
+/**
+ * Initialisiert die Navigation nach DOM Load
+ */
 function initNavigation() {
   new MobileNavigation();
   window.navigationHandler = new NavigationHandler(); // Global verfügbar machen

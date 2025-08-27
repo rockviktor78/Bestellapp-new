@@ -1,7 +1,10 @@
 /**
- * Warenkorb Handler
+ * Warenkorb Handler - Verwaltet alle Warenkorb-Funktionen
  */
 class CartHandler {
+  /**
+   * Konstruktor für den Warenkorb Handler
+   */
   constructor() {
     this.cart = [];
     this.cartCount = 0;
@@ -9,6 +12,9 @@ class CartHandler {
     this.init();
   }
 
+  /**
+   * Initialisiert den Warenkorb und alle Event Listener
+   */
   async init() {
     await this.loadCartModal();
     this.createMobileCartFAB();
@@ -28,6 +34,9 @@ class CartHandler {
     });
   }
 
+  /**
+   * Initialisiert den "Zur Speisekarte" Button im leeren Warenkorb
+   */
   initEmptyCartButton() {
     // Warte bis Modal geladen ist
     const checkModal = setInterval(() => {
@@ -57,6 +66,9 @@ class CartHandler {
     setTimeout(() => clearInterval(checkModal), 5000);
   }
 
+  /**
+   * Lädt das Warenkorb-Modal von der Template-Datei
+   */
   async loadCartModal() {
     try {
       const response = await fetch("templates/cart-modal.html");
@@ -70,6 +82,10 @@ class CartHandler {
     }
   }
 
+  /**
+   * Erstellt den mobilen Warenkorb FAB-Button
+   * @returns {HTMLElement} Das erstellte FAB-Element
+   */
   createMobileCartFAB() {
     // Prüfe ob FAB bereits existiert
     if (document.getElementById("mobileCartFAB")) return;
@@ -91,6 +107,9 @@ class CartHandler {
     return fab;
   }
 
+  /**
+   * Initialisiert alle Event Listener für das Warenkorb-Modal
+   */
   initCartModal() {
     console.log("Initializing cart modal...");
     document.addEventListener("click", (e) => {
@@ -121,6 +140,9 @@ class CartHandler {
     });
   }
 
+  /**
+   * Verarbeitet den Checkout-Prozess mit Popup-Bestätigungen
+   */
   processCheckout() {
     if (this.cart.length === 0) return;
 
@@ -148,6 +170,11 @@ class CartHandler {
     }
   }
 
+  /**
+   * Zeigt ein Checkout-Popup mit Nachricht an
+   * @param {string} message - Die anzuzeigende Nachricht
+   * @param {string} type - Der Popup-Typ (success/error)
+   */
   showCheckoutPopup(message, type = "success") {
     // Erstelle Popup-Element
     const popup = document.createElement("div");
@@ -188,6 +215,9 @@ class CartHandler {
     }, 1500);
   }
 
+  /**
+   * Leert den Warenkorb komplett
+   */
   clearCart() {
     this.cart = [];
     this.cartCount = 0;
@@ -196,6 +226,9 @@ class CartHandler {
     console.log("Warenkorb geleert");
   }
 
+  /**
+   * Öffnet das Warenkorb-Modal
+   */
   openCartModal() {
     console.log("Opening cart modal...", this.cartModal);
     if (this.cartModal) {
@@ -208,6 +241,9 @@ class CartHandler {
     }
   }
 
+  /**
+   * Schließt das Warenkorb-Modal
+   */
   closeCartModal() {
     if (this.cartModal) {
       this.cartModal.classList.remove("cart-modal--open");
@@ -215,6 +251,9 @@ class CartHandler {
     }
   }
 
+  /**
+   * Rendert alle Artikel im Warenkorb-Modal
+   */
   renderCartItems() {
     const cartEmpty = document.getElementById("cartEmpty");
     const cartItems = document.getElementById("cartItems");
@@ -258,6 +297,10 @@ class CartHandler {
     }
   }
 
+  /**
+   * Erhöht die Menge eines Artikels im Warenkorb
+   * @param {string} name - Der Name des Artikels
+   */
   increaseQuantity(name) {
     const item = this.cart.find((item) => item.name === name);
     if (item) {
@@ -268,6 +311,10 @@ class CartHandler {
     }
   }
 
+  /**
+   * Verringert die Menge eines Artikels im Warenkorb
+   * @param {string} name - Der Name des Artikels
+   */
   decreaseQuantity(name) {
     const item = this.cart.find((item) => item.name === name);
     if (item && item.quantity > 1) {
@@ -283,6 +330,9 @@ class CartHandler {
     }
   }
 
+  /**
+   * Initialisiert alle "Hinzufügen" Buttons in der Speisekarte
+   */
   initAddButtons() {
     // Add-to-cart Buttons in der Speisekarte
     document.querySelectorAll(".add_btn").forEach((btn) => {
@@ -294,6 +344,11 @@ class CartHandler {
     });
   }
 
+  /**
+   * Fügt einen Artikel zum Warenkorb hinzu
+   * @param {string} name - Der Name des Artikels
+   * @param {number} price - Der Preis des Artikels
+   */
   addToCart(name, price) {
     const existingItem = this.cart.find((item) => item.name === name);
 
@@ -313,6 +368,9 @@ class CartHandler {
     console.log(`${name} zum Warenkorb hinzugefügt`);
   }
 
+  /**
+   * Zeigt den mobilen Warenkorb FAB-Button auf mobilen Geräten
+   */
   showMobileCartFAB() {
     console.log("showMobileCartFAB called, window width:", window.innerWidth);
 
@@ -328,6 +386,9 @@ class CartHandler {
     }
   }
 
+  /**
+   * Versteckt den mobilen Warenkorb FAB-Button
+   */
   hideMobileCartFAB() {
     const fab = document.getElementById("mobileCartFAB");
     if (fab) {
@@ -335,6 +396,9 @@ class CartHandler {
     }
   }
 
+  /**
+   * Aktualisiert die Warenkorb-Anzeige in Header und FAB
+   */
   updateCartDisplay() {
     // Update cart count in header
     const basketCount = document.getElementById("basketCount");
@@ -349,10 +413,18 @@ class CartHandler {
     }
   }
 
+  /**
+   * Gibt den aktuellen Warenkorb zurück
+   * @returns {Array} Der Warenkorb mit allen Artikeln
+   */
   getCart() {
     return this.cart;
   }
 
+  /**
+   * Berechnet die Gesamtsumme des Warenkorbs
+   * @returns {number} Die Gesamtsumme
+   */
   getCartTotal() {
     return this.cart.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -364,10 +436,6 @@ class CartHandler {
 // Global verfügbar machen
 window.cartHandler = new CartHandler();
 
-// Export für Module
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { CartHandler };
-}
 // Export für Module
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { CartHandler };
