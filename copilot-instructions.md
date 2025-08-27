@@ -81,7 +81,6 @@
 
 - Alle JavaScript-Funktionen müssen JSDoc-Kommentare auf Deutsch haben.
 - JSDoc-Format verwenden: `/** */`
-- Verwende semantisches HTML (header, main, section, nav, article, aside, footer) für bessere Accessibility und SEO.
 - Kurze, prägnante Beschreibung der Funktionsaufgabe.
 - Parameter mit `@param {type} name - Beschreibung` dokumentieren.
 - Rückgabewerte mit `@returns {type} Beschreibung` dokumentieren.

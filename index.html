@@ -16,15 +16,16 @@
     <link rel="stylesheet" href="styles/components/impressum.css" />
     <link rel="stylesheet" href="styles/components/agb.css" />
   </head>
-
   <body>
-    <header w3-include-html="templates/header.html"></header>
-    
-    <main id="content" class="main-content">
-      <!-- Dynamischer Content wird hier geladen -->
+    <div id="header" w3-include-html="templates/header.html"></div>
+
+    <main class="main-content">
+      <div id="content" w3-include-html="templates/home-content.html">
+        <!-- Dynamischer Content wird hier geladen -->
+      </div>
     </main>
-    
-    <footer w3-include-html="templates/footer.html"></footer>
+
+    <div id="footer" w3-include-html="templates/footer.html"></div>
 
     <script type="module" src="scripts/includeHTML.js"></script>
     <script type="module" src="scripts/data.js"></script>
@@ -32,6 +33,5 @@
     <script type="module" src="scripts/storage.js"></script>
     <script type="module" src="scripts/cart.js"></script>
   </body>
-</html>
 </html>
 </html>
