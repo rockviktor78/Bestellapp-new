@@ -147,6 +147,22 @@ class NavigationHandler {
       });
     }
 
+    // Salad Feature Card
+    const saladCard = document.getElementById("saladFeatureCard");
+    if (saladCard) {
+      saladCard.addEventListener("click", () => {
+        this.navigateToMenuCategory("salad");
+      });
+    }
+
+    // Dessert Feature Card
+    const dessertCard = document.getElementById("dessertFeatureCard");
+    if (dessertCard) {
+      dessertCard.addEventListener("click", () => {
+        this.navigateToMenuCategory("dessert");
+      });
+    }
+
     // Delivery Feature Card (führt zur allgemeinen Speisekarte)
     const deliveryCard = document.getElementById("deliveryFeatureCard");
     if (deliveryCard) {

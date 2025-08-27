@@ -54,6 +54,15 @@ const dishesData = [
     image: "./assets/img/caesar-salad.png",
   },
   {
+    id: "mixed-salad",
+    name: "Gemischter Salat",
+    price: 6.5,
+    category: "salad",
+    description:
+      "Fresh mixed greens with tomatoes, cucumbers, and Italian vinaigrette.",
+    image: "./assets/img/mixed-salad.png",
+  },
+  {
     id: "tiramisu",
     name: "Tiramisu",
     price: 5.5,
@@ -61,6 +70,14 @@ const dishesData = [
     description:
       "A classic Italian dessert made with coffee-soaked ladyfingers and mascarpone cheese.",
     image: "./assets/img/tiramisu.png",
+  },
+  {
+    id: "panna-cotta",
+    name: "Panna Cotta",
+    price: 4.5,
+    category: "dessert",
+    description: "Silky smooth vanilla panna cotta with fresh berry coulis.",
+    image: "./assets/img/panna-cotta.png",
   },
 ];
 
