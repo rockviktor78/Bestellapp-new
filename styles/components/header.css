@@ -146,6 +146,7 @@
 
 .header_mobile-menu--open {
   right: 0;
+  background-color: #ede5df;
 }
 
 .header_mobile-close {
