@@ -125,9 +125,124 @@ class NavigationHandler {
         this.initFeatureCards();
       }
 
-      // Re-initialize other dynamic buttons if needed
-      this.reinitializeButtons();
+      // Contact Form Handler
+      if (event.detail.page === "contact") {
+        this.initContactForm();
+      }
     });
+  }
+
+  initContactForm() {
+    const contactForm = document.querySelector(".form");
+    const formBtn = document.querySelector(".form_btn");
+
+    if (contactForm && formBtn) {
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Hole alle Input-Felder
+        const nameInput = contactForm.querySelector(
+          'input[placeholder="Name"]'
+        );
+        const emailInput = contactForm.querySelector(
+          'input[placeholder="E-Mail"]'
+        );
+        const messageInput = contactForm.querySelector(
+          'textarea[placeholder="Nachricht"]'
+        );
+
+        // Prüfe ob alle Felder ausgefüllt sind
+        if (
+          !nameInput.value.trim() ||
+          !emailInput.value.trim() ||
+          !messageInput.value.trim()
+        ) {
+          this.showErrorPopup("Bitte füllen Sie alle Felder aus!");
+          return;
+        }
+
+        // Prüfe E-Mail Format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+          this.showErrorPopup(
+            "Bitte geben Sie eine gültige E-Mail-Adresse ein!"
+          );
+          return;
+        }
+
+        // Zeige Loading-Zustand
+        formBtn.textContent = "Wird gesendet...";
+        formBtn.disabled = true;
+
+        // Simuliere das Senden (nach 1 Sekunde)
+        setTimeout(() => {
+          // Zeige Erfolgs-Popup
+          this.showSuccessPopup();
+
+          // Reset Form
+          contactForm.reset();
+          formBtn.textContent = "Senden";
+          formBtn.disabled = false;
+        }, 1000);
+      });
+    }
+  }
+
+  showSuccessPopup() {
+    const popup = document.createElement("div");
+    popup.className = "success-popup";
+    popup.innerHTML = `
+      <div class="success-popup_content success-popup_content--success">
+        <span class="success-popup_icon">✅</span>
+        <p class="success-popup_text">Nachricht erfolgreich gesendet!</p>
+      </div>
+    `;
+    this.showPopup(popup);
+  }
+
+  showErrorPopup(message) {
+    const popup = document.createElement("div");
+    popup.className = "success-popup";
+    popup.innerHTML = `
+      <div class="success-popup_content success-popup_content--error">
+        <span class="success-popup_icon">❌</span>
+        <p class="success-popup_text">${message}</p>
+      </div>
+    `;
+    this.showPopup(popup);
+  }
+
+  showPopup(popup) {
+    // Finde den Form-Button als Referenzpunkt
+    const formBtn = document.querySelector(".form_btn");
+
+    if (formBtn) {
+      // Positioniere Popup relativ zum Form-Button
+      const btnRect = formBtn.getBoundingClientRect();
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      popup.style.position = "absolute";
+      popup.style.top = `${btnRect.bottom + scrollTop + 10}px`;
+      popup.style.left = `${btnRect.left}px`;
+      popup.style.right = "auto";
+      popup.style.transform = "none";
+    }
+
+    document.body.appendChild(popup);
+
+    // Zeige Popup
+    setTimeout(() => popup.classList.add("success-popup--show"), 10);
+
+    // Verstecke Popup nach 3 Sekunden
+    setTimeout(() => {
+      popup.classList.remove("success-popup--show");
+      setTimeout(() => {
+        if (document.body.contains(popup)) {
+          document.body.removeChild(popup);
+        }
+      }, 300);
+    }, 3000);
   }
 
   initFeatureCards() {
@@ -294,12 +409,6 @@ function initNavigation() {
 
 // Event Listener für verschiedene Initialisierungsszenarien
 document.addEventListener("DOMContentLoaded", initNavigation);
-document.addEventListener("htmlIncluded", initNavigation);
-
-// Export für Module
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { MobileNavigation, NavigationHandler, initNavigation };
-}
 document.addEventListener("htmlIncluded", initNavigation);
 
 // Export für Module

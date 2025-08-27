@@ -37,8 +37,8 @@
 .menu_item {
   display: flex;
   gap: 1rem;
-  padding: 0.5rem;
-  background-color: #ffffff;
+  padding: 1.5rem;
+  background-color: #faf8f5;
   border: 1px solid #b7807c;
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
